@@ -86,7 +86,7 @@ class ConcurrencyController {
  * 支持缓存、并发控制、监控、重试等高级功能
  */
 export class ComprehensiveApiClient {
-  private httpClient: AxiosInstance;
+  private httpClient!: AxiosInstance;
   private configManager: ComprehensiveConfigManager;
   private cacheManager: CacheManager;
   private concurrencyController: ConcurrencyController;
@@ -332,7 +332,7 @@ export class ComprehensiveApiClient {
       
       throw new ComprehensiveCodingApiError(
         'UNKNOWN_ERROR', 
-        error.message || '未知错误',
+        (error as Error).message || '未知错误',
         undefined,
         { action, params }
       );
@@ -483,7 +483,7 @@ export class ComprehensiveApiClient {
         return { 
           success: false, 
           error: error instanceof ComprehensiveCodingApiError ? error : 
-                 new ComprehensiveCodingApiError('BATCH_ERROR', error.message)
+                 new ComprehensiveCodingApiError('BATCH_ERROR', (error as Error).message)
         };
       }
     });

@@ -7,7 +7,7 @@ import { CodingApiRequest, CodingApiResponse, CodingApiError } from './types.js'
  * 负责与 CODING API 的通信
  */
 export class CodingApiClient {
-  private httpClient: AxiosInstance;
+  private httpClient!: AxiosInstance;
   private configManager: ConfigManager;
 
   constructor(configManager: ConfigManager) {
@@ -93,7 +93,7 @@ export class CodingApiClient {
         throw new CodingApiError(code, message);
       }
       
-      throw new CodingApiError('UNKNOWN_ERROR', error.message || '未知错误');
+      throw new CodingApiError('UNKNOWN_ERROR', (error as Error).message || '未知错误');
     }
   }
 

@@ -4,6 +4,32 @@
 
 > **特别感谢** [CODING](https://coding.net/) 平台提供的强大 DevOps 服务！CODING 是腾讯云旗下的一站式软件研发管理平台，为研发团队提供项目协同、代码托管、持续集成、制品库等全链路工具。本项目通过 MCP 协议让 AI 助手也能轻松使用这些专业服务。
 
+## 🚀 **快速开始**
+
+```bash
+# 1. 获取 CODING 个人访问令牌
+# 登录 CODING → 个人设置 → 访问令牌 → 新建令牌
+
+# 2. 配置 Claude Desktop
+# 编辑配置文件，添加 coding-mcp 服务器配置
+# 无需手动安装，npx 会自动下载最新版本
+```
+
+**配置示例**：
+```json
+{
+  "mcpServers": {
+    "coding-mcp": {
+      "command": "npx",
+      "args": ["-y", "coding-mcp@latest"],
+      "env": {
+        "CODING_PERSONAL_ACCESS_TOKEN": "your_token_here"
+      }
+    }
+  }
+}
+```
+
 ## 📊 项目概览
 
 ### 🎯 功能特性
@@ -34,15 +60,9 @@
 
 ## 🛠️ 安装和配置
 
-### 1. 项目构建
+### 1. 无需手动安装
 
-```bash
-# 安装依赖
-npm install
-
-# 构建项目
-npm run build
-```
+通过 `npx` 使用，无需手动安装，始终使用最新版本。
 
 ### 2. 获取个人访问令牌
 
@@ -59,7 +79,7 @@ npm run build
    - ✅ `depot_write` - 推送至代码仓库
 5. 生成并复制令牌
 
-### 3. 配置 MCP 客户端
+### 2. 配置 MCP 客户端
 
 #### Claude Desktop 配置
 
@@ -67,14 +87,30 @@ npm run build
 - **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
 - **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
 
-**配置内容：**
+**基础配置：**
 
 ```json
 {
   "mcpServers": {
     "coding-mcp": {
-      "command": "node",
-      "args": ["D:\\test\\dist\\comprehensive-mcp-server.js"],
+      "command": "npx",
+      "args": ["-y", "coding-mcp@latest"],
+      "env": {
+        "CODING_PERSONAL_ACCESS_TOKEN": "your_personal_access_token_here"
+      }
+    }
+  }
+}
+```
+
+**高级配置（可选）：**
+
+```json
+{
+  "mcpServers": {
+    "coding-mcp": {
+      "command": "npx",
+      "args": ["-y", "coding-mcp@latest"],
       "env": {
         "CODING_API_BASE_URL": "https://e.coding.net/open-api",
         "CODING_PERSONAL_ACCESS_TOKEN": "your_personal_access_token_here",
@@ -94,8 +130,8 @@ npm run build
 {
   "mcpServers": {
     "coding-mcp": {
-      "command": "node",
-      "args": ["./dist/comprehensive-mcp-server.js"],
+      "command": "npx",
+      "args": ["-y", "coding-mcp@latest"],
       "env": {
         "CODING_API_BASE_URL": "https://e.coding.net/open-api",
         "CODING_PERSONAL_ACCESS_TOKEN": "your_personal_access_token_here"
@@ -105,15 +141,13 @@ npm run build
 }
 ```
 
-### 4. 启动服务
+### 3. 使用说明
 
-```bash
-npm start
-```
+配置完成后，重启 Claude Desktop，服务会自动通过 npx 启动。
 
 启动成功后会显示：
 ```
-🚀 CODING API MCP 服务器已启动 (v2.0.0)
+🚀 CODING API MCP 服务器已启动 (v0.1.0)
 ✅ 配置状态: 已配置
 📊 支持 413+ API 接口，覆盖完整 DevOps 流程
 🎉 服务器就绪，可以开始使用所有功能！
@@ -354,14 +388,15 @@ coding-mcp/
 
 ## 🔮 版本信息
 
-- **当前版本**: v2.0.0
+- **当前版本**: v0.1.0
 - **API 覆盖**: 413+ 接口
 - **模块数量**: 12 个
 - **MCP 工具**: 200+ 个
+- **npm 包**: [coding-mcp@0.1.0](https://www.npmjs.com/package/coding-mcp)
 
 ## 📄 许可证
 
-MIT License
+Apache-2.0 License
 
 ## 🙏 特别鸣谢
 
@@ -388,12 +423,35 @@ CODING 是腾讯云旗下的一站式软件研发管理平台，提供：
 
 🚀 **立即开始使用：**
 ```bash
-npm run build && npm start
+# 无需手动安装，直接配置 Claude Desktop
+# 在配置文件中添加以下配置：
+```
+
+```json
+{
+  "mcpServers": {
+    "coding-mcp": {
+      "command": "npx",
+      "args": ["-y", "coding-mcp@latest"],
+      "env": {
+        "CODING_PERSONAL_ACCESS_TOKEN": "your_token_here"
+      }
+    }
+  }
+}
 ```
 
 💡 **配置你的第一个 AI Agent：**
 ```
 "你好，帮我检查一下 CODING API 连接状态"
 ```
+
+## 📦 **npm 包信息**
+
+- **包名**: `coding-mcp`
+- **当前版本**: `v0.1.0`
+- **使用方式**: `npx -y coding-mcp@latest`（无需手动安装）
+- **GitHub**: [https://github.com/ForeverWorld/coding-mcp](https://github.com/ForeverWorld/coding-mcp)
+- **npm 页面**: [https://www.npmjs.com/package/coding-mcp](https://www.npmjs.com/package/coding-mcp)
 
 **现在你可以通过自然语言与 AI Agent 交互，使用 CODING 平台的全部功能！** ✨

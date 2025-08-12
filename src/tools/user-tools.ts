@@ -1,12 +1,13 @@
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 import { CodingApiClient } from '../api-client.js';
+import type { ComprehensiveApiClient } from '../core/comprehensive-api-client.js';
 import { UserInfo } from '../types.js';
 
 /**
  * 用户相关的 MCP 工具
  */
 export class UserTools {
-  constructor(private apiClient: CodingApiClient) {}
+  constructor(private apiClient: CodingApiClient | ComprehensiveApiClient) {}
 
   /**
    * 获取所有用户相关的工具定义
@@ -151,10 +152,10 @@ export class UserTools {
   private async updateUserProfile(updateData: Partial<UserInfo>): Promise<UserInfo> {
     const params: any = {};
     
-    if (updateData.name) params.Name = updateData.name;
-    if (updateData.email) params.Email = updateData.email;
-    if (updateData.phone) params.Phone = updateData.phone;
-    if (updateData.avatar) params.Avatar = updateData.avatar;
+    if (updateData.Name) params.Name = updateData.Name;
+    if (updateData.Email) params.Email = updateData.Email;
+    if (updateData.Phone) params.Phone = updateData.Phone;
+    if (updateData.Avatar) params.Avatar = updateData.Avatar;
 
     const response = await this.apiClient.request<{ User: UserInfo }>('ModifyCodingCurrentUser', params);
     return response.User;

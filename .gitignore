@@ -1,1 +1,86 @@
+# 构建输出
 /dist/
+/build/
+*.tsbuildinfo
+
+# 依赖
+/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# 运行时数据
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# 覆盖率目录
+lib-cov
+coverage/
+*.lcov
+.nyc_output
+
+# 测试
+.coverage
+.jest
+
+# 环境变量
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# 日志
+logs
+*.log
+
+# 临时文件
+.tmp
+.temp
+*.tmp
+*.temp
+
+# 编辑器和IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# npm 包文件
+*.tgz
+*.tar.gz
+
+# TypeScript
+*.d.ts.map
+
+# 缓存
+.cache/
+.parcel-cache/
+
+# 系统文件
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Windows
+Desktop.ini
+$RECYCLE.BIN/
+
+# 备份文件
+*.bak
+*.backup
+*.old
+
+# 锁文件（可选，根据团队决定）
+# package-lock.json
+# yarn.lock

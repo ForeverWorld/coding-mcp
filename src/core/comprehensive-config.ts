@@ -318,7 +318,7 @@ export class ComprehensiveConfigManager {
         });
       }
     } catch (error) {
-      throw new Error(`配置导入失败: ${error.message}`);
+      throw new Error(`配置导入失败: ${(error as Error).message}`);
     }
   }
 }

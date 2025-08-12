@@ -1,12 +1,13 @@
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 import { CodingApiClient } from '../api-client.js';
+import type { ComprehensiveApiClient } from '../core/comprehensive-api-client.js';
 import { TeamInfo } from '../types.js';
 
 /**
  * 团队相关的 MCP 工具
  */
 export class TeamTools {
-  constructor(private apiClient: CodingApiClient) {}
+  constructor(private apiClient: CodingApiClient | ComprehensiveApiClient) {}
 
   /**
    * 获取所有团队相关的工具定义

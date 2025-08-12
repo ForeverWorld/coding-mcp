@@ -49,7 +49,7 @@ class ComprehensiveCodingApiMcpServer {
     this.server = new Server(
       {
         name: 'comprehensive-coding-api-server',
-        version: '2.0.0',
+        version: '0.1.0',
       },
       {
         capabilities: {
@@ -633,7 +633,7 @@ class ComprehensiveCodingApiMcpServer {
     const statusText = isConfigured ? '已配置' : '待配置';
     
     console.error(`
-🚀 CODING API MCP 服务器已启动 (v2.0.0)
+🚀 CODING API MCP 服务器已启动 (v0.1.0)
 ${statusIcon} 配置状态: ${statusText}
 📊 支持 413+ API 接口，覆盖完整 DevOps 流程
 🔧 包含模块：CD/DevOps、Git、CI/Build、Issue、User、Project、Team
