@@ -7,15 +7,23 @@
 ## 🚀 **快速开始**
 
 ```bash
-# 1. 获取 CODING 个人访问令牌
+# 1. 确认你的 CODING 团队地址
+# 例如：https://your-team.coding.net (私有部署)
+# 或者：https://e.coding.net (公有云)
+
+# 2. 获取 CODING 个人访问令牌
 # 登录 CODING → 个人设置 → 访问令牌 → 新建令牌
 
-# 2. 配置 Claude Desktop
+# 3. 配置 Claude Desktop
 # 编辑配置文件，添加 coding-mcp 服务器配置
 # 无需手动安装，npx 会自动下载最新版本
 ```
 
-**配置示例**：
+**⚠️ 重要：必须正确配置 API 基础地址**
+
+根据你的 CODING 部署类型选择对应的配置：
+
+### 📊 **私有部署团队**（推荐）
 ```json
 {
   "mcpServers": {
@@ -23,6 +31,23 @@
       "command": "npx",
       "args": ["-y", "coding-mcp@latest"],
       "env": {
+        "CODING_API_BASE_URL": "https://your-team.coding.net/open-api",
+        "CODING_PERSONAL_ACCESS_TOKEN": "your_token_here"
+      }
+    }
+  }
+}
+```
+
+### ☁️ **公有云部署**
+```json
+{
+  "mcpServers": {
+    "coding-mcp": {
+      "command": "npx",
+      "args": ["-y", "coding-mcp@latest"],
+      "env": {
+        "CODING_API_BASE_URL": "https://e.coding.net/open-api",
         "CODING_PERSONAL_ACCESS_TOKEN": "your_token_here"
       }
     }
@@ -87,7 +112,14 @@
 - **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
 - **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
 
-**基础配置：**
+**⚠️ 重要：API 基础地址配置**
+
+`CODING_API_BASE_URL` 是**必需配置项**，必须根据你的团队设置正确的地址：
+
+- **私有部署团队**：`https://your-team.coding.net/open-api`
+- **公有云团队**：`https://e.coding.net/open-api`
+
+### **私有部署配置示例**：
 
 ```json
 {
@@ -96,6 +128,7 @@
       "command": "npx",
       "args": ["-y", "coding-mcp@latest"],
       "env": {
+        "CODING_API_BASE_URL": "https://your-team.coding.net/open-api",
         "CODING_PERSONAL_ACCESS_TOKEN": "your_personal_access_token_here"
       }
     }
@@ -103,7 +136,7 @@
 }
 ```
 
-**高级配置（可选）：**
+### **高级配置（推荐）**：
 
 ```json
 {
@@ -112,7 +145,7 @@
       "command": "npx",
       "args": ["-y", "coding-mcp@latest"],
       "env": {
-        "CODING_API_BASE_URL": "https://e.coding.net/open-api",
+        "CODING_API_BASE_URL": "https://your-team.coding.net/open-api",
         "CODING_PERSONAL_ACCESS_TOKEN": "your_personal_access_token_here",
         "CODING_ENABLE_CACHE": "true",
         "CODING_MAX_CONCURRENT_REQUESTS": "15",
@@ -133,13 +166,30 @@
       "command": "npx",
       "args": ["-y", "coding-mcp@latest"],
       "env": {
-        "CODING_API_BASE_URL": "https://e.coding.net/open-api",
+        "CODING_API_BASE_URL": "https://your-team.coding.net/open-api",
         "CODING_PERSONAL_ACCESS_TOKEN": "your_personal_access_token_here"
       }
     }
   }
 }
 ```
+
+### 🔍 **如何确认你的 API 基础地址**
+
+1. **查看你的 CODING 登录地址**：
+   - 如果是 `https://your-team.coding.net`，则 API 地址为 `https://your-team.coding.net/open-api`
+   - 如果是 `https://e.coding.net`，则 API 地址为 `https://e.coding.net/open-api`
+
+2. **测试 API 连接**：
+   ```bash
+   curl "https://your-team.coding.net/open-api/?Action=DescribeTeam" \
+     -H "Authorization: token your_token_here"
+   ```
+
+3. **常见配置错误**：
+   - ❌ 忘记配置 `CODING_API_BASE_URL`
+   - ❌ 使用错误的团队地址（如用公有云地址访问私有部署）
+   - ❌ API 地址缺少 `/open-api` 后缀
 
 ### 3. 使用说明
 
@@ -227,21 +277,26 @@
 
 ### 环境变量
 
-| 变量名 | 说明 | 默认值 |
-|--------|------|--------|
-| `CODING_PERSONAL_ACCESS_TOKEN` | **必需** - 个人访问令牌 | - |
-| `CODING_API_BASE_URL` | API 基础地址 | `https://e.coding.net/open-api` |
-| `CODING_ENABLE_CACHE` | 是否启用缓存 | `false` |
-| `CODING_MAX_CONCURRENT_REQUESTS` | 最大并发请求数 | `10` |
-| `CODING_API_TIMEOUT` | 请求超时时间（毫秒） | `30000` |
-| `CODING_API_RETRY_ATTEMPTS` | 重试次数 | `3` |
+| 变量名 | 说明 | 默认值 | 是否必需 |
+|--------|------|--------|----------|
+| `CODING_PERSONAL_ACCESS_TOKEN` | 个人访问令牌 | - | ✅ **必需** |
+| `CODING_API_BASE_URL` | API 基础地址<br/>私有部署：`https://your-team.coding.net/open-api`<br/>公有云：`https://e.coding.net/open-api` | `https://e.coding.net/open-api` | ✅ **必需** |
+| `CODING_ENABLE_CACHE` | 是否启用缓存 | `false` | 可选 |
+| `CODING_MAX_CONCURRENT_REQUESTS` | 最大并发请求数 | `10` | 可选 |
+| `CODING_API_TIMEOUT` | 请求超时时间（毫秒） | `30000` | 可选 |
+| `CODING_API_RETRY_ATTEMPTS` | 重试次数 | `3` | 可选 |
+
+**⚠️ 重要提醒**：
+- `CODING_API_BASE_URL` 必须与你的团队地址匹配
+- 私有部署团队不能使用公有云 API 地址，反之亦然
+- 配置错误会导致所有 API 调用失败
 
 ### 高性能配置示例
 
 ```json
 {
   "env": {
-    "CODING_API_BASE_URL": "https://e.coding.net/open-api",
+    "CODING_API_BASE_URL": "https://your-team.coding.net/open-api",
     "CODING_PERSONAL_ACCESS_TOKEN": "your_token_here",
     "CODING_ENABLE_CACHE": "true",
     "CODING_MAX_CONCURRENT_REQUESTS": "20",
@@ -304,11 +359,25 @@
 **Q: 提示 "环境变量配置失败"**
 - **解决**: 重新生成访问令牌，确保权限充足
 
-**Q: API 调用失败**
-- **解决**: 检查网络连接，验证令牌有效性
+**Q: API 调用失败 / 无法连接**
+- **解决步骤**：
+  1. 确认 `CODING_API_BASE_URL` 配置正确
+  2. 私有部署使用：`https://your-team.coding.net/open-api`
+  3. 公有云使用：`https://e.coding.net/open-api`
+  4. 检查网络连接，验证令牌有效性
 
-**Q: 私有部署无法连接**
-- **解决**: 修改 `CODING_API_BASE_URL` 为正确的私有部署地址
+**Q: 私有部署团队无法连接**
+- **常见错误**: 使用了公有云 API 地址 `https://e.coding.net/open-api`
+- **正确配置**: 必须使用 `https://your-team.coding.net/open-api`
+- **验证方法**: 
+  ```bash
+  curl "https://your-team.coding.net/open-api/?Action=DescribeTeam" \
+    -H "Authorization: token your_token"
+  ```
+
+**Q: 公有云团队无法连接**
+- **常见错误**: 使用了私有部署格式的 API 地址
+- **正确配置**: 使用 `https://e.coding.net/open-api`
 
 ### 调试技巧
 
@@ -434,6 +503,7 @@ CODING 是腾讯云旗下的一站式软件研发管理平台，提供：
       "command": "npx",
       "args": ["-y", "coding-mcp@latest"],
       "env": {
+        "CODING_API_BASE_URL": "https://your-team.coding.net/open-api",
         "CODING_PERSONAL_ACCESS_TOKEN": "your_token_here"
       }
     }
@@ -441,10 +511,30 @@ CODING 是腾讯云旗下的一站式软件研发管理平台，提供：
 }
 ```
 
-💡 **配置你的第一个 AI Agent：**
-```
-"你好，帮我检查一下 CODING API 连接状态"
-```
+## ✅ **配置验证清单**
+
+在开始使用前，请确认以下配置：
+
+1. **✅ 确认团队类型**
+   - [ ] 私有部署：`https://your-team.coding.net/open-api`
+   - [ ] 公有云：`https://e.coding.net/open-api`
+
+2. **✅ 验证 API 连接**
+   ```bash
+   curl "https://your-team.coding.net/open-api/?Action=DescribeTeam" \
+     -H "Authorization: token your_token_here"
+   ```
+
+3. **✅ 检查令牌权限**
+   - [ ] `collaboration:issue:rw` - 事项管理
+   - [ ] `project:profile:rw` - 项目信息
+   - [ ] `team:profile:ro` - 团队信息
+   - [ ] `vcs:repository:rw` - 代码仓库
+
+4. **✅ 测试 MCP 服务器**
+   ```
+   "你好，帮我检查一下 CODING API 连接状态"
+   ```
 
 ## 📦 **npm 包信息**
 

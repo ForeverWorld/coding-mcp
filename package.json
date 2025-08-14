@@ -1,6 +1,6 @@
 {
   "name": "coding-mcp",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "简洁易用的 CODING DevOps 平台 MCP 服务器，支持 413+ API 接口",
   "main": "dist/index.js",
   "bin": {
